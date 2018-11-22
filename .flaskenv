@@ -1,0 +1,2 @@
+FLASK_APP=funchat
+FLASK_ENV=development
