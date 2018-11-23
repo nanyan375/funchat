@@ -3,7 +3,7 @@
 import hashlib
 from datetime import datetime
 from flask import current_app
-from flask_login import UserMixin
+from flask_login import UserMixin, AnonymousUserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from funchat.extensions import db, login_manager
@@ -34,6 +34,21 @@ class User(UserMixin, db.Model):
 		if self.email is not None and self.email_hash is None:
 			self.email_hash = hashlib.md5(self.email.encode('utf-8')).hexdigest()
 
+	@property
+	def is_admin(self):
+		return self.email == current_app.config['FUNCHAT_ADMIN_EMAIL']
+
+	@property
+	def gravatar(self):
+		return "https://gravatar.com/avatar/%s?d=monsterid"%self.email_hash
+
+
+class Guest(AnonymousUserMixin):
+	@property
+	def is_admin(self):
+		return False
+
+login_manager.anonymous_user = Guest
 
 class Message(db.Model):
 	id = db.Column(db.Integer, primary_key=True)

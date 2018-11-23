@@ -24,6 +24,34 @@
     </div>
 {% endblock %}
 
+<!-- Snippet Modal -->
+<div class="ui modal small snippet">
+    <div class="header">Create code or text snippets</div>
+    <div class="content">
+        <div class="ui form">
+            <textarea id="snippet-textarea" rows="20"></textarea>
+        </div>
+    </div>
+    <div class="actions">
+        <button class="ui button cancel">Cancel</button>
+        <button class="ui button blue approve" id="snippet-button">Create</button>
+    </div>
+</div>
+
+<!-- Mobile message Modal -->
+<div id="mobile-new-message-modal" class="ui modal small">
+    <div class="content">
+        <div class="ui form">
+            <textarea id="mobile-message-textarea" rows="15"></textarea>
+        </div>
+    </div>
+    <div class="actions">
+        <button class="ui button cancel">Cancel</button>
+        <button class="ui button orange approve" id="send-button">Send</button>
+    </div>
+</div>
+    
+
 {% block content %}{% endblock %}
 {% block scripts %}
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
@@ -31,6 +59,13 @@
     <script src="{{ url_for('static', filename='js/socket.io.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/forms.js') }}"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {{ moment.include_moment(local_js=url_for('static', filename='js/moment-with-locales.min.js')) }}
+    <script type="text/javascript">
+        var root_url = "{{ url_for('chat.home') }}";
+        var messages_url = "{{ url_for('chat.get_messages') }}";
+        var current_user_id = {{ current_user.id|default(0) }};
+        var csrf_token = "{{ csrf_token() }}";
+    </script>
 {% endblock %}
 </body>
 </html>

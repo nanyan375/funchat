@@ -4,12 +4,19 @@ verify_ssl = true
 name = "pypi"
 
 [dev-packages]
+"autopep8" = "*"
+yapf = "*"
 
 [packages]
 flask-wtf = "*"
 flask-oauthlib = "*"
 flask-sqlalchemy = "*"
 python-dotenv = "*"
+bleach = "*"
+flask-socketio = "*"
+markdown = "*"
+eventlet = "*"
+faker = "*"
 
 [requires]
 python_version = "3.5"

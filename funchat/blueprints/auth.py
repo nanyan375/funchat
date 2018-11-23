@@ -28,6 +28,7 @@ def login():
 
 			if user.verify_password(password):
 				login_user(user, remember_me)
+				return redirect(url_for('chat.home'))
 		flash("Either the email or password was incorrect")
 		return redirect(url_for('.login'))
 
@@ -41,8 +42,8 @@ def logout():
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
-	if current_user.is_authenticated:
-		return redirect(url_for('main.index'))
+	# if current_user.is_authenticated:
+	# 	return redirect(url_for('main.index'))
 
 	if request.method == 'POST':
 		email = request.form['email'].lower()
