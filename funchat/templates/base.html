@@ -12,7 +12,7 @@
 
 {% block nav %}
     <div class="ui top fixed borderless menu">
-        <a class="item catchat" href=#>
+        <a class="item funchat" href="{{ url_for('chat.home') }}">
             <img src="{{ url_for('static', filename='logo.png') }}">
             <span>FunChat</span>
         </a>
@@ -53,6 +53,7 @@
     
 
 {% block content %}{% endblock %}
+
 {% block scripts %}
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='semantic-ui/semantic.min.js') }}"></script>
@@ -63,10 +64,9 @@
     <script type="text/javascript">
         var root_url = "{{ url_for('chat.home') }}";
         var messages_url = "{{ url_for('chat.get_messages') }}";
-        var current_user_id = {{ current_user.id|default(0) }};
+        var current_user_id = {{ current_user.id | default(0) }};
         var csrf_token = "{{ csrf_token() }}";
     </script>
 {% endblock %}
 </body>
 </html>
-

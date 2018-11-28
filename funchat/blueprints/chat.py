@@ -16,19 +16,20 @@ online_users = []
 
 @socketio.on('new message')
 def new_message(message_body):
-    html_message = to_html(message_body)
-    message = Message(author=current_user._get_current_object(), body=html_message)
-    db.session.add(message)
-    db.session.commit()
-    emit(
-        'new message', {
-        'message_html': render_template('chat/_message.html', message=message),
-        'message_body': html_message,
-        'gravatar': current_user.gravatar,
-        'nickname': current_user.nickname,
-        'user_id': current_user.id
-        },
-        broadcast = True)
+	print("---------------------", message_body)
+	html_message = to_html(message_body)
+	message = Message(author=current_user._get_current_object(), body=html_message)
+	db.session.add(message)
+	db.session.commit()
+	emit(
+		'new message', {
+		'message_html': render_template('chat/_message.html', message=message),
+		'message_body': html_message,
+		'gravatar': current_user.gravatar,
+		'nickname': current_user.nickname,
+		'user_id': current_user.id
+		},
+		broadcast = True)
 
 @socketio.on('new message', namespace='/anonymous')
 def new_anonymous_message(message_body):

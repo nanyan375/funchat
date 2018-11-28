@@ -6,6 +6,9 @@ from flask_oauthlib.client import OAuth
 from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
+from flask_mail import Mail
+# from flask_celery import Celery
+# from redis import Redis
 
 db = SQLAlchemy()
 socketio = SocketIO()
@@ -13,6 +16,9 @@ login_manager = LoginManager()
 csrf = CSRFProtect()
 moment = Moment()
 oauth = OAuth()
+mail = Mail()
+# celery = Celery()
+# redis = Redis()
 
 @login_manager.user_loader
 def load_user(user_id):

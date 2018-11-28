@@ -1,5 +1,5 @@
 [[source]]
-url = "https://pypi.org/simple"
+url = "https://mirrors.aliyun.com/pypi/simple"
 verify_ssl = true
 name = "pypi"
 
@@ -17,6 +17,11 @@ flask-socketio = "*"
 markdown = "*"
 eventlet = "*"
 faker = "*"
+flask-mail = "*"
+redis = "==2.10.5"
+flask-redis = "*"
+amqp = "==1.4.9"
+celery = "==3.1.18"
 
 [requires]
 python_version = "3.5"

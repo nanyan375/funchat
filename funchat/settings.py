@@ -21,6 +21,18 @@ class BaseConfig:
 	SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', prefix+os.path.join(basedir, 'data.db'))
 	# 不追踪对象的修改并且发送信号
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
+	# flask_mail相关设定
+	MAIL_SUPPRESS_SEND = False
+	MAIL_SERVER = 'smtp.qq.com'
+	MAIL_PORT = 465
+	MAIL_USE_SSL = True
+	MAIL_USERNAME = os.getenv("MAIL_USERNAME")
+	MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
+	MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER")
+	# celery相关设定
+	CELERY_BROKER_URL = 'redis://localhost:6379/0'
+	CELERY_RESULT_BACKEND = 'redis://loaclhost:6379/0'
+	CELERY_IMPORTS = ('funchat.tasks')
 
 class DevelopmentConfig(BaseConfig):
 	DEBUG = False

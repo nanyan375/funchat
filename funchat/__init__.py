@@ -4,12 +4,15 @@ import os
 import click
 from flask import Flask, render_template
 from flask_wtf.csrf import CSRFError
+from flask_redis import redis
+from celery import Celery
 
-from funchat.blueprints.auth import auth_bp
-from funchat.blueprints.chat import chat_bp
-from funchat.settings import config
-from funchat.extensions import db, login_manager, csrf, moment, oauth, socketio
+from funchat.settings import config, BaseConfig
+from funchat.extensions import db, login_manager, csrf, moment, oauth, socketio,\
+								mail
 from funchat.models import User, Message
+
+celery = Celery(__name__, broker=BaseConfig.CELERY_BROKER_URL, backend=BaseConfig.CELERY_RESULT_BACKEND)
 
 def create_app(config_name=None):
 	if config_name is None:
@@ -17,6 +20,7 @@ def create_app(config_name=None):
 
 	app = Flask('funchat')
 	app.config.from_object(config[config_name])
+	celery.conf.update(app.config)
 	
 	register_extensions(app)
 	register_blueprints(app)
@@ -31,9 +35,13 @@ def register_extensions(app):
 	csrf.init_app(app)
 	socketio.init_app(app)
 	moment.init_app(app)
+	mail.init_app(app)
+	# celery.init_app(app)
 
 
 def register_blueprints(app):
+	from funchat.blueprints.auth import auth_bp
+	from funchat.blueprints.chat import chat_bp
 	app.register_blueprint(auth_bp)
 	app.register_blueprint(chat_bp)
 
